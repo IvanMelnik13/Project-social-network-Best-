@@ -16,14 +16,17 @@ function App({ initialized }) {
 		)
 	} else {
 		return (
-			<div className="App">
-				<Header />
-				<Sidebar />
-				<main>
-					<Routes>
-						<Route path="/profile/:userID?" element={<ProfileContainer />} />
-					</Routes>
-				</main>
+			<div className='App py-3 bg-neutral-100 min-h-[100vh] justify-items-start'>
+				<div className="container mx-auto grid grid-cols-12 px-4 items-start gap-3">
+					<Header />
+					<Sidebar />
+					<main className='col-span-9 w-full rounded-md bg-white'>
+						<Routes>
+							<Route path="/profile/:userID?" element={<ProfileContainer />} />
+							<Route path="/*" element={<div>404</div>} />
+						</Routes>
+					</main>
+				</div>
 			</div>
 		);
 	}
