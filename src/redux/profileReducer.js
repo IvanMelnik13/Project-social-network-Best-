@@ -2,6 +2,7 @@ import { profileAPI } from "../API/api";
 
 const initialState = {
 	profile: null,
+	data: null,
 }
 
 const SET_PROFILE_SUCCES = "profileReducer/SET_PROFILE_SUCCES";
@@ -29,4 +30,12 @@ export const setProfileSucces = (profile) => {
 export const setProfile = (id) => async (dispatch) => {
 	const data = await profileAPI.getProfile(id);
 	dispatch(setProfileSucces(data));
+}
+
+export const saveProfile = (profile, id) => async (dispatch) => {
+	const data = await profileAPI.setProfile(profile);
+	if (data.resultCode == 0) {
+		dispatch(setProfile(id));
+	}
+	return data;
 }

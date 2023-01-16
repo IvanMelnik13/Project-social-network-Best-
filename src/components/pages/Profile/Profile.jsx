@@ -2,13 +2,11 @@ import { useState } from 'react';
 import avatar from './../../../assets/img/avatar.jpg';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
+import { useForm } from 'react-hook-form';
+import { stringify } from 'postcss';
 
-const Profile = ({ profile, isOwner }) => {
+const Profile = ({ profile, isOwner, saveProfile }) => {
 	let [editMode, setEditMode] = useState(false);
-
-	const handleSubmit = (formData) => {
-		console.log(formData);
-	}
 
 	return (
 		<div className='items-start flex flex-col p-4 gap-3'>
@@ -17,7 +15,9 @@ const Profile = ({ profile, isOwner }) => {
 			</div>
 
 			{!editMode && <ProfileInfo profile={profile} />}
-			{editMode && <ProfileReduxForm initialValues={profile} profile={profile} onSubmit={handleSubmit} />}
+			{editMode && <ProfileReactHookForm saveProfile={saveProfile} setEditMode={setEditMode} profile={profile} />}
+
+			{/* {editMode && <ProfileReduxForm initialValues={profile} profile={profile} onSubmit={onSubmit} />} */}
 
 			{isOwner &&
 				<button className='underline' onClick={() => { setEditMode(e => !e) }}>
@@ -31,7 +31,8 @@ const ProfileInfo = ({ profile }) => {
 	return (
 		<>
 			<div>{profile?.fullName}</div>
-			{profile?.lookingForAJob && <div>lookingForAJob: {profile?.lookingForAJob}</div>}
+			<div>About me: {profile?.aboutMe}</div>
+			{profile?.lookingForAJob && <div>lookingForAJob: {profile?.lookingForAJob ? 'yes' : 'no'}</div>}
 			{profile?.lookingForAJobDescription &&
 				<div>lookingForAJobDescription: {profile?.lookingForAJobDescription}</div>}
 			<div>
@@ -49,41 +50,77 @@ const ProfileInfo = ({ profile }) => {
 	)
 }
 
-const ProfileForm = ({ handleSubmit, profile, initialValues }) => {
+const ProfileReactHookForm = ({ profile, setEditMode, saveProfile }) => {
+	const { register, handleSubmit, setError, formState: { errors }, clearErrors } = useForm({
+		defaultValues: {
+			fullName: profile.fullName,
+			aboutMe: profile.aboutMe,
+			lookingForAJob: profile.lookingForAJob,
+			lookingForAJobDescription: profile.lookingForAJobDescription,
+			contacts: profile.contacts,
+		},
+	});
+
+	const onSubmit = async formData => {
+		console.log(formData);
+		const data = await saveProfile(formData, profile.userId);
+		if (data.resultCode == 0) {
+			setEditMode(false);
+		} else {
+			setError('_form', { type: 'server side', message: data.messages[0] })
+		}
+	}
+
 	return (
-		<form className='flex flex-col items-start gap-2 w-full' onSubmit={handleSubmit}>
+		<form className='flex flex-col items-start gap-2 w-full' onSubmit={handleSubmit(onSubmit)}>
+			{errors._form && <div className='text-red-700'>Error: {errors._form.message}</div>}
 			<div className='flex gap-3 w-full'>
-				<span>Full name:</span>
-				<Field className='border-b-2 flex-auto' placeholder='full name' name='fullName' component='input' type='text' />
+				<label>Full name:</label>
+				<input
+					className='border-b-2 flex-auto'
+					placeholder='full name'
+					{...register('fullName')} />
 			</div>
 			<div className='flex gap-3 w-full'>
-				<span>looking for a job:</span>
-				<Field placeholder='' name='lookingForAJob' component='input' type='checkbox' />
+				<label>About me:</label>
+				<input
+					className='border-b-2 flex-auto'
+					placeholder='about me'
+					{...register('aboutMe')} />
 			</div>
 			<div className='flex gap-3 w-full'>
-				<span>Looking for a job description:</span>
-				<Field className='border-b-2 flex-auto' placeholder='looking for a job description' name='lookingForAJobDescription' component='input' type='text' />
+				<label>Looking for a job:</label>
+				<input
+					type='checkbox'
+					{...register('lookingForAJob')} />
+			</div>
+			<div className='flex gap-3 w-full'>
+				<label>Looking for a job description:</label>
+				<input
+					className='border-b-2 flex-auto'
+					placeholder='looking for a job description'
+					{...register('lookingForAJobDescription')} />
 			</div>
 
-			<div>Contacts:</div>
 			{profile &&
 				Object.keys(profile.contacts).map(key => {
 					return (
-						<div className='flex gap-3 w-full pl-3'>
-							<span>{key}:</span>
-							<Field className='border-b-2 flex-auto' placeholder={[key]}
-								name={`contacts.${key}`} component='input' type='text' />
+						<div key={key} className='flex gap-3 w-full pl-3'>
+							<label>{key}:</label>
+							<input
+								className='border-b-2 flex-auto'
+								placeholder={[key]}
+								{...register(`contacts.${key}`)}
+							/>
 						</div>
 					)
 				})}
 
-			<button className='border-2 py-1 px-5 rounded-[10px]' type='submit'>Submit</button>
+			<button onClick={() => clearErrors('_form')}
+				className='border-2 py-1 px-5 rounded-[10px]'
+				type='submit'>Submit</button>
 		</form>
 	)
 }
-
-const ProfileReduxForm = reduxForm({
-	form: 'editProfile',
-})(ProfileForm)
 
 export default Profile;

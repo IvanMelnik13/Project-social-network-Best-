@@ -2,9 +2,9 @@ import Profile from "./Profile";
 import { connect } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
-import { setProfile } from "../../../redux/profileReducer";
+import { setProfile, saveProfile } from "../../../redux/profileReducer";
 
-const ProfileContainer = ({ profile, myID, setProfile }) => {
+const ProfileContainer = ({ profile, myID, setProfile, saveProfile }) => {
 	let { userID } = useParams();
 	const navigate = useNavigate();
 
@@ -20,7 +20,7 @@ const ProfileContainer = ({ profile, myID, setProfile }) => {
 	}, [userID])
 
 	return (
-		<Profile profile={profile} isOwner={myID == userID} />
+		<Profile profile={profile} saveProfile={saveProfile} isOwner={myID == userID} />
 	)
 }
 
@@ -31,4 +31,4 @@ const mapStateToProps = (state) => {
 	}
 }
 
-export default connect(mapStateToProps, { setProfile })(ProfileContainer);
+export default connect(mapStateToProps, { setProfile, saveProfile })(ProfileContainer);
