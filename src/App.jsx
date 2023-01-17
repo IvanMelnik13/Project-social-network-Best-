@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import React from 'react';
 import LoginContainer from './components/pages/Login/LoginContainer';
+import HeaderContainer from './components/Header/HeaderContainer';
 
 function App({ initialized }) {
 	if (!initialized) {
@@ -19,7 +20,7 @@ function App({ initialized }) {
 		return (
 			<div className='App py-3 bg-neutral-100 min-h-[100vh] justify-items-start'>
 				<div className="container mx-auto grid grid-cols-12 px-4 items-start gap-3">
-					<Header />
+					<HeaderContainer />
 					<Sidebar />
 					<main className='col-span-9 w-full rounded-md bg-white'>
 						<Routes>

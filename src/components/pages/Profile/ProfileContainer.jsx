@@ -1,24 +1,26 @@
 import Profile from "./Profile";
 import { connect } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { setProfile, saveProfile, setStatus, saveStatus, savePhoto } from "../../../redux/profileReducer";
 
 const ProfileContainer = ({ profile, myID, setProfile, saveProfile, status, setStatus, saveStatus, savePhoto }) => {
 	let { userID } = useParams();
-	const navigate = useNavigate();
 
 	if (!userID) {
 		userID = myID;
 	}
-	if (!userID) {
-		navigate('/login');
-	}
 
 	useEffect(() => {
-		setProfile(userID);
-		setStatus(userID);
+		if (userID) {
+			setProfile(userID);
+			setStatus(userID);
+		}
 	}, [userID])
+
+	if (!userID) {
+		return <Navigate to="/login" />
+	}
 
 	return (
 		<Profile profile={profile} status={status} savePhoto={savePhoto} saveStatus={saveStatus} saveProfile={saveProfile} isOwner={myID == userID} />

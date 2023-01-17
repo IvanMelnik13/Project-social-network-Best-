@@ -1,16 +1,17 @@
-import { connect } from "react-redux"
-import Login from "./Login"
+import { connect } from "react-redux";
+import Login from "./Login";
+import { login } from "../../../redux/authMeReducer";
 
-const LoginContainer = () => {
+const LoginContainer = ({ login, isAuth }) => {
 	return (
-		<Login />
+		<Login login={login} isAuth={isAuth} />
 	)
 }
 
 const mapStateToProps = (state) => {
 	return {
-
+		isAuth: state.authMe.isAuth,
 	}
 }
 
-export default connect(mapStateToProps, {})(LoginContainer);
+export default connect(mapStateToProps, { login })(LoginContainer);

@@ -9,7 +9,7 @@ const Sidebar = ({ myID }) => {
 					<NavLink to={`/profile/2`} >Teacher</NavLink>
 				</li>
 				<li>
-					<NavLink to={`/profile/${myID ?? ''}`} >Profile</NavLink>
+					<NavLink to={`/profile`} >Profile</NavLink>
 				</li>
 			</ul>
 		</nav>

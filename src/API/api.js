@@ -11,6 +11,16 @@ const instance = axios.create({
 export const authMeAPI = {
 	getMe() {
 		return instance.get('auth/me').then(response => response.data);
+	},
+	login({ email, password }) {
+		return instance.post('/auth/login', {
+			email,
+			password,
+			rememberMe: true,
+		}).then(response => response.data);
+	},
+	logout() {
+		return instance.delete('/auth/login').then(response => response.data);
 	}
 }
 
@@ -36,5 +46,17 @@ export const profileAPI = {
 				'Content-Type': 'multipart/form-data'
 			}
 		}).then(response => response.data)
+	},
+}
+
+export const usersAPI = {
+	getUsers(count, page) {
+		return instance.get(`/users?page=${page}&count=${count}`).then(response => response.data)
+	},
+	follow(id) {
+		return instance.post('follow/' + id).then(response => response.data);
+	},
+	unfollow(id) {
+		return instance.delete('follow/' + id).then(response => response.data);
 	}
 }
