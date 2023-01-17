@@ -6,6 +6,9 @@ const Sidebar = ({ myID }) => {
 		<nav className="col-span-3 w-full bg-white rounded-md">
 			<ul className="flex flex-col items-start p-4">
 				<li>
+					<NavLink to={`/profile/2`} >Teacher</NavLink>
+				</li>
+				<li>
 					<NavLink to={`/profile/${myID ?? ''}`} >Profile</NavLink>
 				</li>
 			</ul>

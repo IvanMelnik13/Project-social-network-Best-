@@ -8,6 +8,7 @@ import { initializing } from './redux/appReducer';
 import { connect } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import React from 'react';
+import LoginContainer from './components/pages/Login/LoginContainer';
 
 function App({ initialized }) {
 	if (!initialized) {
@@ -23,6 +24,7 @@ function App({ initialized }) {
 					<main className='col-span-9 w-full rounded-md bg-white'>
 						<Routes>
 							<Route path="/profile/:userID?" element={<ProfileContainer />} />
+							<Route path="/login" element={<LoginContainer />} />
 							<Route path="/*" element={<div>404</div>} />
 						</Routes>
 					</main>

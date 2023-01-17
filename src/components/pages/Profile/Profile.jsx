@@ -1,18 +1,18 @@
 import { useState } from 'react';
 import avatar from './../../../assets/img/avatar.jpg';
-import { Field, reduxForm } from 'redux-form';
-import { connect } from 'react-redux';
 import { useForm } from 'react-hook-form';
-import { stringify } from 'postcss';
+import ProfileStatus from './ProfileStatus';
+import React from 'react';
 
-const Profile = ({ profile, isOwner, saveProfile }) => {
+const Profile = ({ profile, isOwner, saveProfile, status, saveStatus, savePhoto }) => {
 	let [editMode, setEditMode] = useState(false);
 
 	return (
 		<div className='items-start flex flex-col p-4 gap-3'>
-			<div className='max-w-[200px] border-2 border-red-700 rounded-[50%] overflow-hidden'>
-				<img src={profile?.photos?.large || avatar} alt="avatar" />
-			</div>
+
+			<ProfilePhoto profile={profile} isOwner={isOwner} savePhoto={savePhoto} />
+
+			<ProfileStatus status={status} saveStatus={saveStatus} isOwner={isOwner} />
 
 			{!editMode && <ProfileInfo profile={profile} />}
 			{editMode && <ProfileReactHookForm saveProfile={saveProfile} setEditMode={setEditMode} profile={profile} />}
@@ -23,6 +23,27 @@ const Profile = ({ profile, isOwner, saveProfile }) => {
 				<button className='underline' onClick={() => { setEditMode(e => !e) }}>
 					{editMode ? "Cansel edit" : "Edit"}
 				</button>}
+		</div>
+	)
+}
+
+const ProfilePhoto = ({ profile, isOwner, savePhoto }) => {
+	const inputRef = React.useRef();
+
+	const onChange = (e) => {
+		savePhoto(e.target.files[0]);
+		inputRef.current.value = null;
+	}
+
+	return (
+		<div>
+			<div className='max-w-[200px] mb-1 border-2 border-red-700 rounded-[50%] overflow-hidden'>
+				<img src={profile?.photos?.large || avatar} alt="avatar" />
+			</div>
+			{isOwner &&
+				<input type="file"
+					ref={inputRef}
+					onChange={onChange} />}
 		</div>
 	)
 }
