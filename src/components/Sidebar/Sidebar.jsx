@@ -11,6 +11,9 @@ const Sidebar = ({ myID }) => {
 				<li>
 					<NavLink to={`/profile`} >Profile</NavLink>
 				</li>
+				<li>
+					<NavLink to={`/users`} >Users</NavLink>
+				</li>
 			</ul>
 		</nav>
 	)

@@ -10,6 +10,7 @@ import { BrowserRouter } from 'react-router-dom';
 import React from 'react';
 import LoginContainer from './components/pages/Login/LoginContainer';
 import HeaderContainer from './components/Header/HeaderContainer';
+import UsersContainer from './components/pages/Users/UsersContainer';
 
 function App({ initialized }) {
 	if (!initialized) {
@@ -24,6 +25,7 @@ function App({ initialized }) {
 					<Sidebar />
 					<main className='col-span-9 w-full rounded-md bg-white'>
 						<Routes>
+							<Route path='/users' element={<UsersContainer />} />
 							<Route path="/profile/:userID?" element={<ProfileContainer />} />
 							<Route path="/login" element={<LoginContainer />} />
 							<Route path="/*" element={<div>404</div>} />
