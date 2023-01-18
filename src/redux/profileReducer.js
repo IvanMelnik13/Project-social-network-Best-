@@ -3,14 +3,21 @@ import { profileAPI } from "../API/api";
 const initialState = {
 	profile: null,
 	status: null,
+	isFetching: false,
 }
 
 const SET_PROFILE_SUCCES = "profileReducer/SET_PROFILE_SUCCES";
 const SET_STATUS_SUCCES = "profileReducer/SET_STATUS_SUCCES";
 const SET_PHOTO_SUCCES = "profileReducer/SET_PHOTO_SUCCES";
+const SET_IS_FETCHING = "profileReducer/SET_IS_FETCHING";
 
 const profileReducer = (state = initialState, action) => {
 	switch (action.type) {
+		case SET_IS_FETCHING:
+			return {
+				...state,
+				isFetching: action.isFetching,
+			}
 		case SET_PROFILE_SUCCES:
 			return {
 				...state,
@@ -32,6 +39,13 @@ const profileReducer = (state = initialState, action) => {
 }
 export default profileReducer;
 
+export const setIsFetching = (isFetching) => {
+	return {
+		type: SET_IS_FETCHING,
+		isFetching,
+	}
+}
+
 export const setProfileSucces = (profile) => {
 	return {
 		type: SET_PROFILE_SUCCES,
@@ -40,8 +54,10 @@ export const setProfileSucces = (profile) => {
 }
 
 export const setProfile = (id) => async (dispatch) => {
+	dispatch(setIsFetching(true));
 	const data = await profileAPI.getProfile(id);
 	dispatch(setProfileSucces(data));
+	dispatch(setIsFetching(false));
 }
 
 export const saveProfile = (profile, id) => async (dispatch) => {

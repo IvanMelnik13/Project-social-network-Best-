@@ -6,9 +6,11 @@ const initialState = {
 	email: null,
 	login: null,
 	isAuth: false,
+	captcha: null,
 }
 
 const SET_DATA = 'authMeReducer/SET_DATA';
+const SET_CAPTCHA_SUCCESS = 'authMeReducer/SET_CAPTCHA_SUCCESS';
 
 const authMeReducer = (state = initialState, action) => {
 	switch (action.type) {
@@ -17,11 +19,30 @@ const authMeReducer = (state = initialState, action) => {
 				...state,
 				...action.data,
 			}
+		case SET_CAPTCHA_SUCCESS:
+			return {
+				...state,
+				captcha: action.captcha,
+			}
 		default:
 			return state;
 	}
 }
 export default authMeReducer;
+
+export const setCaptchaSuccess = (captcha) => {
+	return {
+		type: SET_CAPTCHA_SUCCESS,
+		captcha,
+	}
+}
+
+export const setCaptcha = () => async (dispatch) => {
+	const data = await authMeAPI.getCaptchaUrl();
+	console.log(data);
+	const captcha = data.url;
+	dispatch(setCaptchaSuccess(captcha));
+}
 
 export const setDataSucces = (data) => {
 	return {
@@ -37,11 +58,13 @@ export const setData = () => async (dispatch) => {
 	}
 }
 
-export const login = ({ email, password }) => async (dispatch) => {
-	const data = await authMeAPI.login({ email, password });
+export const login = ({ email, password, captcha }) => async (dispatch) => {
+	const data = await authMeAPI.login({ email, password, captcha });
 
 	if (data.resultCode == 0) {
 		dispatch(setData());
+	} else if (data.resultCode == 10) {
+		dispatch(setCaptcha());
 	}
 
 	return data;

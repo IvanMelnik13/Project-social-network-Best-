@@ -4,8 +4,15 @@ import { useForm } from 'react-hook-form';
 import ProfileStatus from './ProfileStatus';
 import React from 'react';
 
-const Profile = ({ profile, isOwner, saveProfile, status, saveStatus, savePhoto }) => {
+const Profile = ({ profile, isOwner, saveProfile, status, saveStatus, savePhoto, isFetching }) => {
 	let [editMode, setEditMode] = useState(false);
+
+	if (isFetching) {
+		console.log('fetching');
+		return (
+			<div className='p-4 text-start'>Loading...</div>
+		)
+	}
 
 	return (
 		<div className='items-start flex flex-col p-4 gap-3'>
