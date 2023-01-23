@@ -1,22 +1,22 @@
-import { useForm } from "react-hook-form";
-import { Navigate } from "react-router-dom";
+import { useEffect } from "react";
+import { useForm } from "react-hook-form"
+import { loginFormDataType } from "../../../types/types";
 
-const Login = ({ login, isAuth, captcha }) => {
-	if (isAuth) {
-		return <Navigate to='/profile' />
-	}
-
-	return (
-		<div
-			className="text-start p-4">
-			<h2 className="text-2xl font-bold mb-2">Login</h2>
-			<LoginForm login={login} captcha={captcha} />
-		</div>
-	)
+type LoginFormType = {
+	email: string
+	password: string
+	captcha: string
+	_form: null | string
 }
 
-const LoginForm = ({ login, captcha }) => {
-	const { register, handleSubmit, setError, clearErrors, formState: { errors } } = useForm({
+type PropsType = {
+	login: (LoginFormData: loginFormDataType) => void
+	captcha: null | string
+	serverErrors: Array<string> | null
+}
+
+const LoginForm: React.FC<PropsType> = ({ login, captcha, serverErrors }) => {
+	const { register, handleSubmit, setError, clearErrors, formState: { errors } } = useForm<LoginFormType>({
 		defaultValues: {
 			email: '',
 			password: '',
@@ -24,11 +24,14 @@ const LoginForm = ({ login, captcha }) => {
 		}
 	});
 
-	const onSubmit = async (formData) => {
-		const data = await login(formData);
-		if (data.resultCode == 1 || data.resultCode == 10) {
-			setError('_form', { type: 'server side', message: data.messages[0] })
+	useEffect(() => {
+		if (serverErrors) {
+			setError('_form', { type: 'server side', message: serverErrors[0] })
 		}
+	}, [serverErrors])
+
+	const onSubmit = (formData: LoginFormType) => {
+		login(formData);
 	}
 
 	return (
@@ -80,4 +83,4 @@ const LoginForm = ({ login, captcha }) => {
 	)
 }
 
-export default Login;
+export default LoginForm

@@ -1,11 +1,17 @@
 import { useEffect, useState } from "react";
 
-const ProfileStatus = ({ status, saveStatus, isOwner }) => {
+type propsType = {
+	status: string | null
+	saveStatus: (status: string | null) => void
+	isOwner: boolean
+}
+
+const ProfileStatus: React.FC<propsType> = ({ status, saveStatus, isOwner }) => {
 	let [editMode, setEditMode] = useState(false);
-	let [statusValue, setStatusValue] = useState(status);
+	let [statusValue, setStatusValue] = useState<string>(status ?? '');
 
 	useEffect(() => {
-		setStatusValue(status);
+		setStatusValue(status ?? '');
 	}, [status])
 
 	const activateEditMode = () => {
@@ -19,7 +25,7 @@ const ProfileStatus = ({ status, saveStatus, isOwner }) => {
 		saveStatus(statusValue);
 	}
 
-	const onChange = (e) => {
+	const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setStatusValue(e.currentTarget.value);
 	}
 

@@ -7,18 +7,22 @@ import { connect } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import React from 'react';
 import HeaderContainer from './components/Header/HeaderContainer';
+import { appStateType } from './redux/store';
+import withSuspense from './HOCs/withSuspense';
 
 const Profile = React.lazy(() => import('./components/pages/Profile/ProfileContainer'));
 const Login = React.lazy(() => import('./components/pages/Login/LoginContainer'));
 const Users = React.lazy(() => import('./components/pages/Users/UsersContainer'));
 
-const Suspense = (Component) => {
-	return (
-		<React.Suspense fallback={<div className='text-start'>Loading...</div>}><Component /></React.Suspense>
-	)
+const UsersWS = withSuspense(Users)
+const ProfileWS = withSuspense(Profile)
+const LoginWS = withSuspense(Login)
+
+type AppPropsType = {
+	initialized: boolean
 }
 
-function App({ initialized }) {
+const App: React.FC<AppPropsType> = ({ initialized }) => {
 	if (!initialized) {
 		return (
 			<div>Loading...</div>
@@ -31,9 +35,9 @@ function App({ initialized }) {
 					<Sidebar />
 					<main className='col-span-9 w-full rounded-md bg-white'>
 						<Routes>
-							<Route path='/users' element={Suspense(Users)} />
-							<Route path="/profile/:userID?" element={Suspense(Profile)} />
-							<Route path="/login" element={Suspense(Login)} />
+							<Route path='/users' element={<UsersWS />} />
+							<Route path="/profile/:userID?" element={<ProfileWS />} />
+							<Route path="/login" element={<LoginWS />} />
 							<Route path="/*" element={<div>404</div>} />
 						</Routes>
 					</main>
@@ -43,7 +47,15 @@ function App({ initialized }) {
 	}
 }
 
-const AppContainer = ({ initializing, initialized }) => {
+type MapStatePropsType = {
+	initialized: boolean
+}
+type MapDispatchPropsType = {
+	initializing: () => void
+}
+type AppContainerPropsType = MapStatePropsType & MapDispatchPropsType
+
+const AppContainer: React.FC<AppContainerPropsType> = ({ initializing, initialized }) => {
 	useEffect(() => {
 		initializing();
 	}, [])
@@ -57,12 +69,12 @@ const AppContainer = ({ initializing, initialized }) => {
 	)
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: appStateType) => {
 	return {
 		initialized: state.app.initialized,
 	}
 }
 
-export default connect(mapStateToProps, {
+export default connect<MapStatePropsType, MapDispatchPropsType, {}, appStateType>(mapStateToProps, {
 	initializing,
 })(AppContainer);

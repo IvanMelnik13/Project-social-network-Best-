@@ -1,8 +1,24 @@
 import { NavLink } from 'react-router-dom';
 import avatar from './../../../assets/img/avatar.jpg';
 import cn from 'classnames';
+import { userType } from '../../../types/types';
 
-const Users = ({ users, page, totalCount, count, isFetching, setPage, portion,
+type propsType = {
+	users: Array<userType>
+	page: number
+	totalCount: number
+	count: number
+	isFetching: boolean
+	setPage: (page: number) => void
+	portion: number
+	portionNumber: number
+	setPortionNumber: (portionNumber: number) => void
+	followUnfollow: (userID: number, isFollowed: boolean) => void
+	isAuth: boolean
+	followProgressingUsers: Array<number>
+}
+
+const Users: React.FC<propsType> = ({ users, page, totalCount, count, isFetching, setPage, portion,
 	portionNumber, setPortionNumber, followUnfollow, isAuth, followProgressingUsers }) => {
 	const maxPage = Math.ceil(totalCount / count);
 	const maxPortionNumber = Math.ceil(maxPage / portion);
