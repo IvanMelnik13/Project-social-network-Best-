@@ -44,6 +44,11 @@ const Users: React.FC<propsType> = ({ users, page, totalCount, count, isFetching
 		)
 	}
 
+	if (page > maxPage && maxPage > 0) {
+		setPortionNumber(maxPortionNumber)
+		setUsers(count, maxPage, term, friend)
+	}
+
 	return (
 		<div className='p-4'>
 			<UsersSearchForms count={count} term={term} friend={friend} findFilterUsers={findFilterUsers} />
@@ -79,7 +84,7 @@ const Users: React.FC<propsType> = ({ users, page, totalCount, count, isFetching
 							key={user.id}>
 							<div className='flex gap-3'>
 								<NavLink to={`/profile/${user.id}`}
-									className="w-[75px] h-[75px] overflow-hidden border-2 border-red-700 rounded-[50%]">
+									className="w-[75px] h-[75px] w-[75px] overflow-hidden border-2 border-red-700 rounded-[50%]">
 									<img
 										src={user?.photos?.small || avatar} alt="" />
 								</NavLink>

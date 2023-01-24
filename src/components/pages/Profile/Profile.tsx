@@ -22,35 +22,31 @@ type profilePropsType = {
 const Profile: React.FC<profilePropsType> = ({ profile, isOwner, saveProfile,
 	status, saveStatus, savePhoto, isFetching, setEditMode, editMode, errors, setFormError }) => {
 
-	if (isFetching) {
+
+	if (profile) {
 		return (
-			<div className='p-4 text-start'>Loading...</div>
+			<div className='items-start flex flex-col p-4 gap-3'>
+
+				<ProfilePhoto profile={profile} isOwner={isOwner} savePhoto={savePhoto} />
+
+				<ProfileStatus status={status} saveStatus={saveStatus} isOwner={isOwner} />
+
+				{!editMode && <ProfileInfo profile={profile} />}
+				{editMode && <ProfileReactHookForm serverErrors={errors} saveProfile={saveProfile}
+					profile={profile} />}
+
+				{isOwner &&
+					<button className='underline' onClick={() => { setEditMode(!editMode); setFormError(null) }}>
+						{editMode ? "Cansel edit" : "Edit"}
+					</button>}
+			</div>
 		)
 	} else {
-		if (profile) {
-			return (
-				<div className='items-start flex flex-col p-4 gap-3'>
-
-					<ProfilePhoto profile={profile} isOwner={isOwner} savePhoto={savePhoto} />
-
-					<ProfileStatus status={status} saveStatus={saveStatus} isOwner={isOwner} />
-
-					{!editMode && <ProfileInfo profile={profile} />}
-					{editMode && <ProfileReactHookForm serverErrors={errors} saveProfile={saveProfile}
-						profile={profile} />}
-
-					{isOwner &&
-						<button className='underline' onClick={() => { setEditMode(!editMode); setFormError(null) }}>
-							{editMode ? "Cansel edit" : "Edit"}
-						</button>}
-				</div>
-			)
-		} else {
-			return (
-				<div className='p-4 text-start'>Loading...</div>
-			)
-		}
+		return (
+			<div className='p-4 text-start'>Profile not found...</div>
+		)
 	}
+
 }
 
 export default Profile;
