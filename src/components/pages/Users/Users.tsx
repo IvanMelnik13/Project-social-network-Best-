@@ -2,6 +2,7 @@ import { NavLink } from 'react-router-dom';
 import avatar from './../../../assets/img/avatar.jpg';
 import cn from 'classnames';
 import { userType } from '../../../types/types';
+import UsersSearchForms from './UsersSearchForm';
 
 type propsType = {
 	users: Array<userType>
@@ -16,11 +17,17 @@ type propsType = {
 	followUnfollow: (userID: number, isFollowed: boolean) => void
 	isAuth: boolean
 	followProgressingUsers: Array<number>
-	setUsers: (count: number, page: number) => void
+	setUsers: (count: number, page: number, term?: null | string, friend?: null | boolean) => void
+	setFilterTerm: (term: string | null) => void
+	setFilterFriend: (friend: boolean | null) => void
+	term: string | null
+	friend: boolean | null
+	findFilterUsers: (count: number, term: string | null, friend: boolean | null) => void
 }
 
 const Users: React.FC<propsType> = ({ users, page, totalCount, count, isFetching, setPage, portion,
-	portionNumber, setPortionNumber, followUnfollow, isAuth, followProgressingUsers, setUsers }) => {
+	portionNumber, setPortionNumber, followUnfollow, isAuth, followProgressingUsers, setUsers, setFilterFriend,
+	setFilterTerm, term, friend, findFilterUsers }) => {
 	const maxPage = Math.ceil(totalCount / count);
 	const maxPortionNumber = Math.ceil(maxPage / portion);
 
@@ -39,6 +46,8 @@ const Users: React.FC<propsType> = ({ users, page, totalCount, count, isFetching
 
 	return (
 		<div className='p-4'>
+			<UsersSearchForms count={count} term={term} friend={friend} findFilterUsers={findFilterUsers} />
+
 			<div className='flex gap-1 mb-4'>
 				<button className={cn('p-1 border rounded-[5px]', { 'bg-slate-100': portionNumber == 1 })}
 					disabled={portionNumber == 1}
@@ -51,7 +60,7 @@ const Users: React.FC<propsType> = ({ users, page, totalCount, count, isFetching
 									className={cn('p-1 border rounded-[5px]',
 										{ 'bg-red-300': page == currentPage })}
 									key={page}
-									onClick={() => setUsers(count, page)}>{page}</button>
+									onClick={() => setUsers(count, page, term, friend)}>{page}</button>
 							)
 						}
 					})}
