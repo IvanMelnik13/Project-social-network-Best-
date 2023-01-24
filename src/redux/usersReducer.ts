@@ -147,6 +147,7 @@ export const setUsers = (count: number, page: number): AppThunkType<ActionsTypes
 
 	dispatch(actions.setUsersSuccess(data.items));
 	dispatch(actions.setTotalCount(data.totalCount));
+	dispatch(actions.setPage(page));
 	dispatch(actions.setIsFetching(false));
 }
 

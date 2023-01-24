@@ -17,9 +17,10 @@ type profilePropsType = {
 	setEditMode: (editMode: boolean) => void
 	editMode: boolean
 	errors: Array<string> | null
+	setFormError: (errors: Array<string> | null) => void
 }
 const Profile: React.FC<profilePropsType> = ({ profile, isOwner, saveProfile,
-	status, saveStatus, savePhoto, isFetching, setEditMode, editMode, errors }) => {
+	status, saveStatus, savePhoto, isFetching, setEditMode, editMode, errors, setFormError }) => {
 
 	if (isFetching) {
 		return (
@@ -39,7 +40,7 @@ const Profile: React.FC<profilePropsType> = ({ profile, isOwner, saveProfile,
 						profile={profile} />}
 
 					{isOwner &&
-						<button className='underline' onClick={() => { setEditMode(!editMode) }}>
+						<button className='underline' onClick={() => { setEditMode(!editMode); setFormError(null) }}>
 							{editMode ? "Cansel edit" : "Edit"}
 						</button>}
 				</div>

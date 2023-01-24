@@ -16,10 +16,11 @@ type propsType = {
 	followUnfollow: (userID: number, isFollowed: boolean) => void
 	isAuth: boolean
 	followProgressingUsers: Array<number>
+	setUsers: (count: number, page: number) => void
 }
 
 const Users: React.FC<propsType> = ({ users, page, totalCount, count, isFetching, setPage, portion,
-	portionNumber, setPortionNumber, followUnfollow, isAuth, followProgressingUsers }) => {
+	portionNumber, setPortionNumber, followUnfollow, isAuth, followProgressingUsers, setUsers }) => {
 	const maxPage = Math.ceil(totalCount / count);
 	const maxPortionNumber = Math.ceil(maxPage / portion);
 
@@ -50,7 +51,7 @@ const Users: React.FC<propsType> = ({ users, page, totalCount, count, isFetching
 									className={cn('p-1 border rounded-[5px]',
 										{ 'bg-red-300': page == currentPage })}
 									key={page}
-									onClick={() => setPage(page)}>{page}</button>
+									onClick={() => setUsers(count, page)}>{page}</button>
 							)
 						}
 					})}

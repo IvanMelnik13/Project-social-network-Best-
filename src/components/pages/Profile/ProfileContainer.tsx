@@ -21,6 +21,7 @@ type mapDispatchPropsType = {
 	saveStatus: (status: string | null) => void
 	savePhoto: (photo: any) => void
 	setEditMode: (editMode: boolean) => void
+	setFormError: (errors: Array<string> | null) => void
 }
 
 type ownPropsType = {}
@@ -28,7 +29,7 @@ type ownPropsType = {}
 type propsType = mapStatePropsType & mapDispatchPropsType & ownPropsType
 
 const ProfileContainer: React.FC<propsType> = ({ profile, myID, setProfile, saveProfile, status, setStatus,
-	saveStatus, savePhoto, isFetching, setEditMode, editMode, errors }) => {
+	saveStatus, savePhoto, isFetching, setEditMode, editMode, errors, setFormError }) => {
 	let { userID } = useParams<{ userID: string | undefined }>();
 	let ID: number | null = Number(userID);
 
@@ -43,6 +44,11 @@ const ProfileContainer: React.FC<propsType> = ({ profile, myID, setProfile, save
 		}
 	}, [ID])
 
+	useEffect(() => {
+		setEditMode(false)
+		setFormError(null)
+	}, [])
+
 	if (!ID) {
 		return <Navigate to="/login" />
 	}
@@ -53,7 +59,7 @@ const ProfileContainer: React.FC<propsType> = ({ profile, myID, setProfile, save
 
 	return (
 		<Profile profile={profile} status={status} savePhoto={savePhoto} saveStatus={saveStatus}
-			saveProfile={saveProfile} editMode={editMode} setEditMode={setEditMode} isOwner={myID == ID} isFetching={isFetching} errors={errors} />
+			saveProfile={saveProfile} editMode={editMode} setEditMode={setEditMode} isOwner={myID == ID} isFetching={isFetching} setFormError={setFormError} errors={errors} />
 	)
 }
 
@@ -70,5 +76,5 @@ const mapStateToProps = (state: appStateType): mapStatePropsType => {
 
 export default connect<mapStatePropsType, mapDispatchPropsType, ownPropsType, appStateType>(mapStateToProps, {
 	setProfile, saveProfile,
-	setStatus, saveStatus, savePhoto, setEditMode: actions.setEditMode
+	setStatus, saveStatus, savePhoto, setEditMode: actions.setEditMode, setFormError: actions.setFormError
 })(ProfileContainer);

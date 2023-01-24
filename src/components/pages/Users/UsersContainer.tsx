@@ -30,14 +30,14 @@ const UsersContainer: React.FC<propsType> = ({ users, page, count, isFetching, f
 
 	useEffect(() => {
 		setUsers(count, page);
-	}, [count, page])
+	}, [])
 
 	return (
 		<Users followProgressingUsers={followProgressingUsers}
 			users={users} page={page} setPortionNumber={setPortionNumber}
 			totalCount={totalCount} count={count} isFetching={isFetching}
 			setPage={setPage} portion={portion} portionNumber={portionNumber}
-			followUnfollow={followUnfollow} isAuth={isAuth} />
+			followUnfollow={followUnfollow} isAuth={isAuth} setUsers={setUsers} />
 	)
 }
 
