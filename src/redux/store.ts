@@ -4,12 +4,14 @@ import appReducer from "./appReducer"
 import authMeReducer from "./authMeReducer"
 import profileReducer from "./profileReducer"
 import usersReducer from "./usersReducer"
+import chatReducer from "./chatReducer"
 
 const rootReducer = combineReducers({
 	authMe: authMeReducer,
 	app: appReducer,
 	profile: profileReducer,
 	users: usersReducer,
+	chat: chatReducer,
 })
 export type rootReducerType = typeof rootReducer
 export type appStateType = ReturnType<rootReducerType>

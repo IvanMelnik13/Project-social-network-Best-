@@ -25,7 +25,7 @@ const Profile: React.FC<profilePropsType> = ({ profile, isOwner, saveProfile,
 
 	if (profile) {
 		return (
-			<div className='items-start flex flex-col p-4 gap-3'>
+			<div className='items-start text-start flex flex-col p-4 gap-3'>
 
 				<ProfilePhoto profile={profile} isOwner={isOwner} savePhoto={savePhoto} />
 

@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import './App.scss';
 import Sidebar from './components/Sidebar/Sidebar';
 import { initializing } from './redux/appReducer';
@@ -10,10 +10,12 @@ import HeaderContainer from './components/Header/HeaderContainer';
 import { appStateType } from './redux/store';
 import withSuspense from './HOCs/withSuspense';
 
+const ChatPage = React.lazy(() => import('./components/pages/Chat/Chat'))
 const Profile = React.lazy(() => import('./components/pages/Profile/ProfileContainer'));
 const Login = React.lazy(() => import('./components/pages/Login/LoginContainer'));
 const Users = React.lazy(() => import('./components/pages/Users/UsersContainer'));
 
+const ChatPageWS = withSuspense(ChatPage)
 const UsersWS = withSuspense(Users)
 const ProfileWS = withSuspense(Profile)
 const LoginWS = withSuspense(Login)
@@ -35,10 +37,12 @@ const App: React.FC<AppPropsType> = ({ initialized }) => {
 					<Sidebar />
 					<main className='col-span-9 w-full rounded-md bg-white'>
 						<Routes>
+							<Route path='/' element={<Navigate to='/profile' />} />
+							<Route path='/chat' element={<ChatPageWS />}></Route>
 							<Route path='/users' element={<UsersWS />} />
 							<Route path="/profile/:userID?" element={<ProfileWS />} />
 							<Route path="/login" element={<LoginWS />} />
-							<Route path="/*" element={<div>404</div>} />
+							<Route path="*" element={<div>404</div>} />
 						</Routes>
 					</main>
 				</div>
@@ -62,9 +66,7 @@ const AppContainer: React.FC<AppContainerPropsType> = ({ initializing, initializ
 
 	return (
 		<BrowserRouter>
-			<React.StrictMode>
-				<App initialized={initialized} />
-			</React.StrictMode>
+			<App initialized={initialized} />
 		</BrowserRouter>
 	)
 }

@@ -27,6 +27,11 @@ const Sidebar: React.FC<sidebarPropsType> = ({ myID }) => {
 						'text-red-700': isActive
 					})} to={`/users`} >Users</NavLink>
 				</li>
+				<li>
+					<NavLink className={({ isActive }) => cn({
+						'text-red-700': isActive
+					})} to={`/chat`} >Chat</NavLink>
+				</li>
 			</ul>
 		</nav>
 	)
