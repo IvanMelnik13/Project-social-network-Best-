@@ -1,26 +1,26 @@
 {
   "files": {
-    "main.css": "/Project-social-network-Best-/static/css/main.07202b16.css",
-    "main.js": "/Project-social-network-Best-/static/js/main.7b2d86ad.js",
-    "static/js/48.28af41e3.chunk.js": "/Project-social-network-Best-/static/js/48.28af41e3.chunk.js",
-    "static/js/967.4ca1453f.chunk.js": "/Project-social-network-Best-/static/js/967.4ca1453f.chunk.js",
-    "static/js/912.efb57a6e.chunk.js": "/Project-social-network-Best-/static/js/912.efb57a6e.chunk.js",
-    "static/js/466.321df9f9.chunk.js": "/Project-social-network-Best-/static/js/466.321df9f9.chunk.js",
-    "static/js/787.bbe925d8.chunk.js": "/Project-social-network-Best-/static/js/787.bbe925d8.chunk.js",
-    "static/js/195.51b0b702.chunk.js": "/Project-social-network-Best-/static/js/195.51b0b702.chunk.js",
-    "static/media/avatar.jpg": "/Project-social-network-Best-/static/media/avatar.5cc100f95b621ce4f01b.jpg",
-    "index.html": "/Project-social-network-Best-/index.html",
-    "main.07202b16.css.map": "/Project-social-network-Best-/static/css/main.07202b16.css.map",
-    "main.7b2d86ad.js.map": "/Project-social-network-Best-/static/js/main.7b2d86ad.js.map",
-    "48.28af41e3.chunk.js.map": "/Project-social-network-Best-/static/js/48.28af41e3.chunk.js.map",
-    "967.4ca1453f.chunk.js.map": "/Project-social-network-Best-/static/js/967.4ca1453f.chunk.js.map",
-    "912.efb57a6e.chunk.js.map": "/Project-social-network-Best-/static/js/912.efb57a6e.chunk.js.map",
-    "466.321df9f9.chunk.js.map": "/Project-social-network-Best-/static/js/466.321df9f9.chunk.js.map",
-    "787.bbe925d8.chunk.js.map": "/Project-social-network-Best-/static/js/787.bbe925d8.chunk.js.map",
-    "195.51b0b702.chunk.js.map": "/Project-social-network-Best-/static/js/195.51b0b702.chunk.js.map"
+    "main.css": "/best-soc.com/static/css/main.07202b16.css",
+    "main.js": "/best-soc.com/static/js/main.3a284241.js",
+    "static/js/48.28af41e3.chunk.js": "/best-soc.com/static/js/48.28af41e3.chunk.js",
+    "static/js/967.4ca1453f.chunk.js": "/best-soc.com/static/js/967.4ca1453f.chunk.js",
+    "static/js/912.efb57a6e.chunk.js": "/best-soc.com/static/js/912.efb57a6e.chunk.js",
+    "static/js/466.321df9f9.chunk.js": "/best-soc.com/static/js/466.321df9f9.chunk.js",
+    "static/js/787.bbe925d8.chunk.js": "/best-soc.com/static/js/787.bbe925d8.chunk.js",
+    "static/js/195.51b0b702.chunk.js": "/best-soc.com/static/js/195.51b0b702.chunk.js",
+    "static/media/avatar.jpg": "/best-soc.com/static/media/avatar.5cc100f95b621ce4f01b.jpg",
+    "index.html": "/best-soc.com/index.html",
+    "main.07202b16.css.map": "/best-soc.com/static/css/main.07202b16.css.map",
+    "main.3a284241.js.map": "/best-soc.com/static/js/main.3a284241.js.map",
+    "48.28af41e3.chunk.js.map": "/best-soc.com/static/js/48.28af41e3.chunk.js.map",
+    "967.4ca1453f.chunk.js.map": "/best-soc.com/static/js/967.4ca1453f.chunk.js.map",
+    "912.efb57a6e.chunk.js.map": "/best-soc.com/static/js/912.efb57a6e.chunk.js.map",
+    "466.321df9f9.chunk.js.map": "/best-soc.com/static/js/466.321df9f9.chunk.js.map",
+    "787.bbe925d8.chunk.js.map": "/best-soc.com/static/js/787.bbe925d8.chunk.js.map",
+    "195.51b0b702.chunk.js.map": "/best-soc.com/static/js/195.51b0b702.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.07202b16.css",
-    "static/js/main.7b2d86ad.js"
+    "static/js/main.3a284241.js"
   ]
 }
