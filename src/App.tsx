@@ -60,8 +60,17 @@ type MapDispatchPropsType = {
 type AppContainerPropsType = MapStatePropsType & MapDispatchPropsType
 
 const AppContainer: React.FC<AppContainerPropsType> = ({ initializing, initialized }) => {
+
+	const errorHandler = () => {
+		alert('Some error...')
+	}
+
 	useEffect(() => {
 		initializing();
+		window.addEventListener('unhandledrejection', errorHandler);
+		return () => {
+			window.removeEventListener('unhandledrejection', errorHandler);
+		}
 	}, [])
 
 	return (

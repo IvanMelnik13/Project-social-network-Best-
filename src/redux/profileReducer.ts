@@ -130,8 +130,10 @@ export const saveProfile = (profileData: profileFormEditDataType, id: number):
 
 export const setStatus = (id: number): AppThunkType<ActionsTypes> =>
 	async (dispatch) => {
-		const response = await profileAPI.getStatus(id);
-		dispatch(actions.setStatusSucces(response.data));
+		dispatch(actions.setIsFetching(true))
+		const response = await profileAPI.getStatus(id)
+		dispatch(actions.setStatusSucces(response.data))
+		dispatch(actions.setIsFetching(false))
 	}
 
 export const saveStatus = (status: string | null): AppThunkType<ActionsTypes> =>
